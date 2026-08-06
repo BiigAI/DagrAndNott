@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>DagrAndNott</AssemblyName>
+    <Description>Custom Day and Night Cycle for Valheim</Description>
+    <Version>1.0.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    
+    <!-- Default path for Valheim on macOS (Steam) -->
+    <ValheimPath Condition="'$(ValheimPath)' == ''">$(HOME)/Library/Application Support/Steam/steamapps/common/Valheim</ValheimPath>
+
+    <!-- Configure MSBuild to search directories for assemblies sequentially -->
+    <AssemblySearchPaths>
+      $(AssemblySearchPaths);
+      libs;
+      $(ValheimPath)/BepInEx/core;
+      $(ValheimPath)/Valheim.app/Contents/Resources/Data/Managed;
+      $(ValheimPath)/valheim_Data/Managed;
+    </AssemblySearchPaths>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- References are resolved dynamically using AssemblySearchPaths -->
+    <Reference Include="BepInEx" />
+    <Reference Include="0Harmony" />
+    <Reference Include="UnityEngine" />
+    <Reference Include="UnityEngine.CoreModule" />
+    <Reference Include="assembly_valheim" />
+    <Reference Include="assembly_utils" />
+  </ItemGroup>
+</Project>
