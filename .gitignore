@@ -1,0 +1,36 @@
+# Build output
+bin/
+obj/
+*.nupkg
+*.snupkg
+packages/
+
+# Referenced game & library DLLs / debug symbols
+libs/
+!libs/.gitkeep
+
+# IDE and Editor files
+.vs/
+.vscode/
+.idea/
+*.user
+*.userosv
+*.suo
+*.userprefs
+*.sln.docstates
+
+# BepInEx & Valheim runtime / test files
+BepInEx/
+*.cfg
+*.log
+
+# OS & Cloud Storage
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+~$*
+
+# Thunderstore packaging output
+Thunderstore/*.zip
+Thunderstore/staging/

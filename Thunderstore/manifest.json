@@ -1,0 +1,10 @@
+{
+  "name": "DagrNott_CustomDayCycle",
+  "version_number": "1.0.0",
+  "website_url": "https://github.com/BiigAI/DagrAndNott",
+  "description": "Client-synchronized custom visual day, night, dawn, and dusk pacing that leaves water and world time stable.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2333",
+    "ValheimModding-Jotunn-2.23.0"
+  ]
+}

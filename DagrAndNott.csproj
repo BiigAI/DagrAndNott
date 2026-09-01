@@ -1,33 +1,85 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <AssemblyName>DagrAndNott</AssemblyName>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>DagrNott_CustomDayCycle</AssemblyName>
+    <RootNamespace>DagrNott_CustomDayCycle</RootNamespace>
     <Description>Custom Day and Night Cycle for Valheim</Description>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Configurations>Debug;Release</Configurations>
     
-    <!-- Default path for Valheim on macOS (Steam) -->
-    <ValheimPath Condition="'$(ValheimPath)' == ''">$(HOME)/Library/Application Support/Steam/steamapps/common/Valheim</ValheimPath>
+    <!-- Default path for Valheim on macOS / Windows -->
+    <ValheimPath Condition="'$(ValheimPath)' == '' and Exists('$(HOME)/Library/Application Support/Steam/steamapps/common/Valheim')">$(HOME)/Library/Application Support/Steam/steamapps/common/Valheim</ValheimPath>
+    <ValheimPath Condition="'$(ValheimPath)' == '' and Exists('C:\Program Files (x86)\Steam\steamapps\common\Valheim')">C:\Program Files (x86)\Steam\steamapps\common\Valheim</ValheimPath>
 
     <!-- Configure MSBuild to search directories for assemblies sequentially -->
     <AssemblySearchPaths>
       $(AssemblySearchPaths);
       libs;
+      ../Valgrind/libs;
+      ../CharactersVault/libs;
+      ../Njoror/libs;
+      ../DagrAndNott/libs;
+      ../Skald/libs;
+      ../Heimdallr/libs;
       $(ValheimPath)/BepInEx/core;
+      $(ValheimPath)/BepInEx/plugins;
       $(ValheimPath)/Valheim.app/Contents/Resources/Data/Managed;
       $(ValheimPath)/valheim_Data/Managed;
     </AssemblySearchPaths>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- References are resolved dynamically using AssemblySearchPaths -->
-    <Reference Include="BepInEx" />
-    <Reference Include="0Harmony" />
-    <Reference Include="UnityEngine" />
-    <Reference Include="UnityEngine.CoreModule" />
-    <Reference Include="assembly_valheim" />
-    <Reference Include="assembly_utils" />
+    <!-- Build-time reference assemblies for .NET Framework -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="JotunnLib" Version="2.23.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <!-- Fallback / direct binary references -->
+    <Reference Include="BepInEx">
+      <HintPath>libs\BepInEx.dll</HintPath>
+      <HintPath Condition="!Exists('libs\BepInEx.dll') and Exists('..\CharactersVault\libs\BepInEx.dll')">..\CharactersVault\libs\BepInEx.dll</HintPath>
+      <HintPath Condition="!Exists('libs\BepInEx.dll') and Exists('..\Valgrind\libs\BepInEx.dll')">..\Valgrind\libs\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>libs\0Harmony.dll</HintPath>
+      <HintPath Condition="!Exists('libs\0Harmony.dll') and Exists('..\CharactersVault\libs\0Harmony.dll')">..\CharactersVault\libs\0Harmony.dll</HintPath>
+      <HintPath Condition="!Exists('libs\0Harmony.dll') and Exists('..\Valgrind\libs\0Harmony.dll')">..\Valgrind\libs\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>libs\UnityEngine.dll</HintPath>
+      <HintPath Condition="!Exists('libs\UnityEngine.dll') and Exists('..\CharactersVault\libs\UnityEngine.dll')">..\CharactersVault\libs\UnityEngine.dll</HintPath>
+      <HintPath Condition="!Exists('libs\UnityEngine.dll') and Exists('..\Valgrind\libs\UnityEngine.dll')">..\Valgrind\libs\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>libs\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath Condition="!Exists('libs\UnityEngine.CoreModule.dll') and Exists('..\CharactersVault\libs\UnityEngine.CoreModule.dll')">..\CharactersVault\libs\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath Condition="!Exists('libs\UnityEngine.CoreModule.dll') and Exists('..\Valgrind\libs\UnityEngine.CoreModule.dll')">..\Valgrind\libs\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="assembly_valheim">
+      <HintPath>libs\assembly_valheim.dll</HintPath>
+      <HintPath Condition="!Exists('libs\assembly_valheim.dll') and Exists('..\CharactersVault\libs\assembly_valheim.dll')">..\CharactersVault\libs\assembly_valheim.dll</HintPath>
+      <HintPath Condition="!Exists('libs\assembly_valheim.dll') and Exists('..\Valgrind\libs\assembly_valheim.dll')">..\Valgrind\libs\assembly_valheim.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="assembly_utils">
+      <HintPath>libs\assembly_utils.dll</HintPath>
+      <HintPath Condition="!Exists('libs\assembly_utils.dll') and Exists('..\CharactersVault\libs\assembly_utils.dll')">..\CharactersVault\libs\assembly_utils.dll</HintPath>
+      <HintPath Condition="!Exists('libs\assembly_utils.dll') and Exists('..\Valgrind\libs\assembly_utils.dll')">..\Valgrind\libs\assembly_utils.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
 </Project>
